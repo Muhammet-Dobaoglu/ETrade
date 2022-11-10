@@ -1,0 +1,69 @@
+﻿@model ETrade.UI.Models.BasketDetailModel
+
+<h1>Add Basket etail</h1>
+
+
+<div class="row">
+
+    <div class="col-md-7">
+        <form method="post">
+            <div>
+                <label>Ürün </label>
+                @*products dto yaptık bunun için*@
+                <select name="ProductId" class="form-control">
+                    @foreach (var item in Model.ProductsDTO)
+                    {
+                        <option value="@item.Id">@item.ProductName</option>
+                    }
+                </select>
+                <div>
+                    <label>Miktar</label>
+                    <input class="form-control" type="text" asp-for="Amount" />
+
+                </div>
+            </div>
+   
+      <input  type="submit" value="Ekle"  class="btn-warning" style="margin:10px"/>
+      <a class="btn btn-primary" href="/Payment/Index/">Siparişi Tamamla</a>
+        </form>
+
+        <div>           
+            <table class="table table-bordered">
+                <tr>
+                    <th>Ürün adı</th>
+                    <th>Miktar</th>
+                    <th>Birim</th>
+                    <th>Kdv</th>
+                    <th>Birim Fiyat</th>
+                    <th>Toplam Fiyat</th>
+                    <th></th>
+                    
+                </tr>
+                @foreach (var item in Model.BasketDetailDTO)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Amonut</td>
+                        <td>@item.UnitName</td>
+                        <td>@item.Vat</td>
+                        <td>@item.UnitPrice</td>
+                        <td>@item.Total</td>
+                        <td>  <a class="btn btn-primary" href="/BasketDetail/Update/@item.Id/productId=@item.ProductId">Değiştir</a>
+                            <a class="btn btn-danger" href="/BasketDetail/Delete/@item.Id/productId=@item.ProductId">Sil</a>
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+        <div>
+            <h4>Toplam:@Model.BasketDetailDTO.Count() Adet Ürün    @Model.BasketDetailDTO.Sum(x => x.Total)</h4>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
